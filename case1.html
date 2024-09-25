@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low Case</title>
+    <link rel="stylesheet" href="case1.css">
+    <link rel="shortcut icon" href="photos/logo.png" type="image/x-icon">
+</head>
+<body>
+    <audio id="caseOpenSound" src="sounds/case_open.mp3" preload="auto"></audio>
+    <audio id="caseFinishSound" src="sounds/case_finish.mp3" preload="auto"></audio>
+    <div class="inventory-container" style="display: none;">
+        <p>Your Inventory</p>
+        <div class="inventory-items"></div>
+        <button class="back-to-case-btn">Back to Case Opening</button>
+    </div>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-link" id="back-link">Back to the cases</a>
+            <img src="photos/amethyst-case.png" alt="Logo" id="logo" width="100px" height="100px">
+            <h1 class="skrzynka">amethyst case - $800</h1>
+        </div>
+        <div class="balance-container">
+            <p>Balance: $<span id="balance">1000.00</span></p>
+        </div>        
+        <div class="result">
+            <div class="middle-marker"></div>
+        </div>
+    <div class="open-case">
+    </div>
+    <div class="notification" id="notification" style="display: none;">
+        <p id="notification-message"></p>
+        <button id="keep-item-btn">Keep</button>
+        <button id="sell-item-btn">Sell for $<span id="sell-price"></span></button>
+    </div>
+    <div class="open-case-buttons">
+        <button class="open-one-btn" data-price="50">Open One - $800</button>
+        <button class="open-two-btn" data-price="90">Open Two - $1600</button>
+        <button class="open-three-btn" data-price="120">Open Three - $2400</button>
+    </div>
+        
+        <div class="case-contents">
+            <h2>Zawartość skrzynki</h2>
+            <div class="grid">
+                <div class="item">
+                    <img src="photos/144x.png" alt="Butterfly Knife | Doppler Sapphire">
+                    <p>Butterfly Knife | Doppler Sapphire</p>
+                </div>
+                <div class="item">
+                    <img src="photos/145.png" alt="Bayonet | Doppler Sapphire">
+                    <p>Bayonet | Doppler Sapphire</p>
+                </div>
+                <div class="item">
+                    <img src="photos/146.png" alt="M9 Bayonet | Lore">
+                    <p>M9 Bayonet | Lore</p>
+                </div>
+                <div class="item">
+                    <img src="photos/147.png" alt="Huntsman Knife | Doppler Ruby">
+                    <p>Huntsman Knife | Doppler Ruby</p>
+                </div>
+                <div class="item">
+                    <img src="photos/148.png" alt="Butterfly Knife | Ultraviolet">
+                    <p>Butterfly Knife | Ultraviolet</p>
+                </div>
+                <div class="item">
+                    <img src="photos/149.png" alt="Talon Knife | Fade">
+                    <p>Talon Knife | Fade</p>
+                </div>
+                <!-- Add more items as needed -->
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <script>
+        // List of case items with their values
+const caseItems = [
+    { name: "Butterfly Knife | Doppler Sapphire", img: "photos/144x.png", chance: 20, value: 50 },
+    { name: "Bayonet | Doppler Sapphire", img: "photos/145.png", chance: 20, value: 100 },
+    { name: "M9 Bayonet | Lore", img: "photos/146.png", chance: 20, value: 150 },
+    { name: "Huntsman Knife | Doppler Ruby", img: "photos/147.png", chance: 20, value: 200 },
+    { name: "Butterfly Knife | Ultraviolet", img: "photos/148.png", chance: 90, value: 120000000 },
+    { name: "Talon Knife | Fade", img: "photos/149.png", chance: 20, value: 120 },
+    // Add more items as needed
+];
+
+// Load sounds
+const caseOpenSound = document.getElementById('caseOpenSound');
+const caseFinishSound = document.getElementById('caseFinishSound');
+
+let balance = 1000; // Starting balance
+
+// Function to get a random case item
+function getRandomCaseItem() {
+    const totalChance = caseItems.reduce((sum, item) => sum + item.chance, 0);
+    let randomChance = Math.random() * totalChance;
+
+    for (let i = 0; i < caseItems.length; i++) {
+        randomChance -= caseItems[i].chance;
+        if (randomChance <= 0) {
+            return caseItems[i];
+        }
+    }
+}
+
+// Function to display the final drawn items
+function displayDrawnItems(finalDraw) {
+    const resultContainer = document.querySelector('.result');
+    resultContainer.innerHTML = '';
+
+    finalDraw.forEach(item => {
+        const drawnItemElement = document.createElement('div');
+        drawnItemElement.classList.add('drawn-item');
+        drawnItemElement.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <p>${item.name}</p>
+        `;
+        resultContainer.appendChild(drawnItemElement);
+
+        showNotification(item);
+    });
+
+    caseFinishSound.play();
+}
+
+// Show notification for the drawn item
+function showNotification(item) {
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    const sellPrice = document.getElementById('sell-price');
+
+    notificationMessage.textContent = `You got: ${item.name}`;
+    sellPrice.textContent = item.value.toFixed(2);
+
+    notification.style.display = 'block';
+
+    document.getElementById('sell-item-btn').onclick = function() {
+        sellItem(item.value);
+        notification.style.display = 'none';
+    };
+
+    document.getElementById('keep-item-btn').onclick = function() {
+        notification.style.display = 'none';
+    };
+}
+
+// Sell item and update balance
+function sellItem(price) {
+    balance += price;
+    updateBalance();
+}
+
+// Update displayed balance
+function updateBalance() {
+    const balanceElement = document.getElementById('balance');
+    balanceElement.textContent = balance.toFixed(2);
+}
+
+// Animate cases opening
+function animateCases(numCases) {
+    const resultContainer = document.querySelector('.result');
+    resultContainer.innerHTML = '';
+
+    caseOpenSound.play();
+
+    const roller = document.createElement('div');
+    roller.classList.add('roller');
+
+    for (let i = 0; i < 100; i++) {
+        const randomItem = getRandomCaseItem();
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('rolling-item');
+        itemElement.innerHTML = `
+            <img src="${randomItem.img}" alt="${randomItem.name}">
+            <p>${randomItem.name}</p>
+        `;
+        roller.appendChild(itemElement);
+    }
+
+    resultContainer.appendChild(roller);
+
+    roller.style.transition = `transform 5s cubic-bezier(0.25, 1, 0.5, 1)`;
+    roller.style.transform = `translateX(-${Math.random() * 2000 + 1000}px)`;
+
+    setTimeout(() => {
+        const finalDraw = [];
+        for (let i = 0; i < numCases; i++) {
+            finalDraw.push(getRandomCaseItem());
+        }
+        displayDrawnItems(finalDraw);
+    }, 5000);
+}
+
+// Open cases and check balance
+function openCases(numCases) {
+    const cost = numCases * 800;
+    if (balance >= cost) {
+        balance -= cost;
+        updateBalance();
+        animateCases(numCases);
+    } else {
+        alert("Not enough balance to open cases.");
+    }
+}
+
+// Event listeners for buttons
+document.querySelector('.open-one-btn').addEventListener('click', () => openCases(1));
+document.querySelector('.open-two-btn').addEventListener('click', () => openCases(2));
+document.querySelector('.open-three-btn').addEventListener('click', () => openCases(3));
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const roller = document.querySelector('.roller');
+            const items = document.querySelectorAll('.rolling-item');
+            
+            function startRolling() {
+                const itemWidth = items[0].offsetWidth + 20; // szerokość elementu + margines
+                const totalWidth = itemWidth * items.length;
+                
+                let position = 0;
+                const duration = 3000; // czas trwania animacji (3 sekundy)
+        
+                roller.style.transition = `transform ${duration / 1000}s cubic-bezier(0.25, 1, 0.5, 1)`;
+                
+                // Losowanie losowej pozycji
+                const randomItem = Math.floor(Math.random() * items.length);
+                const targetPosition = -(randomItem * itemWidth) + (roller.offsetWidth / 2 - itemWidth / 2);
+                
+                // Animacja przesunięcia
+                roller.style.transform = `translateX(${targetPosition}px)`;
+            }
+        
+            // Dodaj event kliknięcia na przycisk "Otwórz skrzynkę"
+            const openCaseButton = document.querySelector('.open-one-btn');
+            openCaseButton.addEventListener('click', function() {
+                startRolling();
+            });
+        });
+        let inventory = [];
+
+// Function to add item to inventory
+function addItemToInventory(item) {
+    inventory.push(item);
+    updateInventoryUI();
+}
+
+// Function to update inventory UI
+function updateInventoryUI() {
+    const inventoryContainer = document.querySelector('.inventory-items');
+    inventoryContainer.innerHTML = '';
+
+    inventory.forEach(item => {
+        const inventoryItem = document.createElement('div');
+        inventoryItem.classList.add('inventory-item');
+        inventoryItem.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <p>${item.name}</p>
+        `;
+        inventoryContainer.appendChild(inventoryItem);
+    });
+}
+
+// Show inventory
+document.querySelector('.back-to-case-btn').addEventListener('click', () => {
+    document.querySelector('.inventory-container').style.display = 'none';
+    document.querySelector('.case-contents').style.display = 'block';
+});
+
+// Modify the existing keep item button functionality
+document.getElementById('keep-item-btn').onclick = function() {
+    const currentItem = caseItems.find(item => item.name === notificationMessage.textContent.replace('You got: ', ''));
+    addItemToInventory(currentItem);
+    notification.style.display = 'none';
+};
+
+// Show inventory button (add somewhere in your case interface)
+document.querySelector('#inventory-btn').addEventListener('click', () => {
+    document.querySelector('.inventory-container').style.display = 'block';
+    document.querySelector('.case-contents').style.display = 'none';
+});
+
+        </script>
+        
+    
+
+</body>
+</html>

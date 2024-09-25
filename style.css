@@ -1,0 +1,266 @@
+/* Styling  */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling body */
+body {
+    background-color: #0a1e35;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+/* Styling for the header */
+header {
+    width: 100%;
+    padding: 20px 0;
+    background-color: #0a1e35;
+    display: flex;
+    justify-content: space-between; /* Allows for elements to be spaced out */
+    align-items: center;
+}
+
+/* Left side: logo and social icons */
+#left-side {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Spacing between logo and icons */
+}
+
+/* Logo styling */
+#logo {
+    max-width: 150px;
+    height: auto;
+    transition: transform 0.3s ease; /* Smooth scaling on hover */
+}
+
+#logo:hover {
+    transform: scale(1.1); /* Slightly enlarges the logo on hover */
+}
+
+/* Social media icons */
+#social-icons a img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease; /* Smooth scaling on hover */
+    background: linear-gradient(145deg, #1c3a5b, #162f4a);
+    border-radius: 5px;
+}
+
+#social-icons a img:hover {
+    transform: scale(1.1); /* Enlarges social media icons on hover */
+}
+
+/* Center part: navigation menu */
+#center-menu {
+    display: flex;
+    gap: 30px;
+}
+
+/* Navigation menu links */
+#center-menu a {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#center-menu a:hover {
+    color: #48c9b0; /* Color change on hover */
+}
+
+/* Right side: Balance, avatar, and settings */
+#right-side {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Spacing between elements */
+}
+
+/* Balance and coins */
+#balance-container {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(145deg, #1c3a5b, #162f4a);
+    border-radius: 10px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #48c9b0;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1000;
+    transition: background-color 0.3s ease; /* Smooth color change on hover */
+}
+
+#ba:hover {
+    background-color: #1b2838; /* Darker background on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+}
+
+/* Balance text */
+#balance {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Balance icon */
+#balance-container img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Coins section */
+#coins {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Coin image */
+#coins img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Avatar image */
+#avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #48c9b0; /* Border around avatar */
+}
+
+/* Settings icon */
+#settings img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Content containers */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Tile styling */
+.case {
+    background: linear-gradient(145deg, #1c3a5b, #192a3b);
+    border-radius: 15px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow change on hover */
+    position: relative;
+}
+
+/* Tile hover effect */
+.case:hover {
+    transform: translateY(-10px); /* Slight upward movement on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+}
+
+/* Tile image */
+.case img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease; /* Smooth scaling on hover */
+}
+
+/* Image hover effect */
+.case:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Tile description */
+.case p {
+    color: #ffffff;
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+/* Price display */
+.case-price {
+    display: inline-block;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 20px;
+    border-radius: 20px;
+    position: relative;
+    width: 120px; /* Fixed width for the price */
+    margin: 0 auto; /* Centers the price */
+}
+
+/* Limited offer section (empty - add more CSS rules as needed) */
+#LimitedOffer {
+    
+        font-size: 22px;
+        border: 2px solid #1c3a5b;
+        width: 1880px;
+        height: 100px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center; /* Centrowanie poziome */
+        align-items: center;     /* Centrowanie pionowe */
+        margin: auto;
+        color: white;
+}
+    
+
+/* Counter-Strike cases section */
+.Counter-StrikeCases {
+    font-size: 22px;
+    border: 2px solid #1c3a5b;
+    width: 1880px;
+    height: 100px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center; /* Centrowanie poziome */
+    align-items: center;     /* Centrowanie pionowe */
+    margin: auto;
+    color: white;
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showNotification 0.5s forwards;
+}
+
+/* Success notification style */
+.notification.success {
+    background-color: #48c9b0; /* Green for success */
+}
+
+/* Error notification style */
+.notification.error {
+    background-color: #e74c3c; /* Red for error */
+}
+
+/* Animation for showing notification */
+@keyframes showNotification {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
